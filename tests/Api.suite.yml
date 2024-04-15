@@ -1,0 +1,13 @@
+actor: ApiTester
+suite_namespace: Tests\Api
+modules:
+    # enable helpers as array
+    enabled:
+        - Db:
+            dsn: "mysql:host=127.0.0.1;port=3306;dbname=service_framework_test"
+            user: "root"
+            password: ""
+        - REST:
+              url: 'http://service-framework/api'
+              depends: PhpBrowser
+              part: [ json ]
