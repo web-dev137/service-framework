@@ -1,10 +1,11 @@
 ABOUT THIS FRAMEWORK
 --------------------
 This framework implements ideas and concepts from various
-php frameworks and individual microservices' architecture services.
+php frameworks and is designed to implement specific microservices 
+of a project implemented on a microservice architecture.
 Routing:
 Set request method require now but in future I will fix it.
-- Route sets in config file in route section:
+- Route are configured in config file in route section:
 ~~~
    [
     "uri" => GET api/index,
@@ -22,8 +23,10 @@ Set request method require now but in future I will fix it.
 ]
 php command.php -c hello/index --msg="Hi"
 ~~~
-Database instance sets in the entry script(index.php), configurations you can set in file config.php
-Models has method "load" for load post data(if post params exist), has property protected db property that
+The database instance, routes and configurations are configured in the App class,
+and the configurations themselves are stored in a file "config.php ".
+The same thing, but for console commands is configured in the Console class.
+Model has method "load" for load post data(if post params exist), has property protected db property that
 setting from db instance from App::$db.
 Class Db has while two methods for batch insert and clear tables also
 this class has property pdo of class PDO.
