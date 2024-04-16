@@ -8,15 +8,6 @@ use http\Exception\InvalidArgumentException;
 final class Router
 {
     private static array $routes = [];
-    public static function route(string $uri, string $controller, string $action)
-    {
-        $params = array_slice($_GET,1);
-        self::$routes[$uri] = [
-            "controller" => $controller,
-            "action" => $action,
-            "params" => $params
-        ];
-    }
 
     public  static function loadRoutes()
     {
@@ -26,21 +17,60 @@ final class Router
                 self::$routes[$uri]["action"]
             );
         ($methodExist)?
-            $response = self::callAction($uri):
+            $response = self::loadRoute($uri):
             $response = Response::notFoundErr();
         echo $response;
     }
 
-    private static function callAction(string $uri): bool|string
+    public static function delete(string $uri, string $controller, string $action)
     {
-        $route = self::$routes[$uri];
-        $c = $route["controller"];
-        $a = $route["action"];
+        $params = array_slice($_GET,1);
+        self::$routes["DELETE ".$uri] = [
+            "controller" => $controller,
+            "action" => $action,
+            "params" => $params
+        ];
+    }
 
+    public static function patch(string $uri, string $controller, string $action)
+    {
+        $params = array_slice($_GET,1);
+        self::$routes["PATCH ".$uri] = [
+            "controller" => $controller,
+            "action" => $action,
+            "params" => $params
+        ];
+    }
+
+    public static function get(string $uri, string $controller, string $action)
+    {
+        $params = array_slice($_GET,1);
+        self::$routes["GET ".$uri] = [
+            "controller" => $controller,
+            "action" => $action,
+            "params" => $params
+        ];
+    }
+
+    public static function post(string $uri, string $controller, string $action)
+    {
+        $params = array_slice($_GET,1);
+        self::$routes["POST ".$uri] = [
+            "controller" => $controller,
+            "action" => $action,
+            "params" => $params
+        ];
+    }
+
+    private static function loadRoute(string $uri):bool|string
+    {
+        $controller = self::$routes[$uri]["controller"];
+        $action = self::$routes[$uri]["action"];
+        $params = self::$routes[$uri]["params"];
         $data = match ($_SERVER["REQUEST_METHOD"]) {
-            "DELETE" => self::requestHandler($c,"delete",$route["params"]),
-            "PATCH" => self::requestHandler($c,"update",$route["params"]),
-            default => self::requestHandler($c,$a,$route["params"])
+            "DELETE" => self::requestHandler($controller,"delete",$params),
+            "PATCH" => self::requestHandler($controller,"update",$params),
+            default => self::requestHandler($controller,$action,$params)
         };
         return json_encode($data);
     }

@@ -13,7 +13,7 @@ final class RouterConsole
      * @param string $action
      * @param array $params
      */
-    public  function route(
+    public  static function route(
         string $command,
         string $controller,
         string $action,
@@ -32,13 +32,13 @@ final class RouterConsole
      * @param array $argv
      * @return bool
      */
-    public function loadRoutes(array $argv): bool
+    public static function loadRoutes(array $argv): bool
     {
         $route_key = $argv[2];//your command
-        if($this->valideRoute($argv,$route_key)) {
+        if(self::valideRoute($argv,$route_key)) {
             $route = self::$routes[$route_key];
             if(method_exists($route["controller"],$route["action"])) {
-               return $this->callAction($route,$argv);
+               return self::callAction($route,$argv);
             }
         }
         echo "wrong command";
@@ -51,7 +51,7 @@ final class RouterConsole
      * @param string $route_key
      * @return bool
      */
-    private function valideRoute(array $argv,string $route_key): bool
+    private static function valideRoute(array $argv,string $route_key): bool
     {
        return count($argv) >= 3
         && $argv[1] == "-c"
@@ -65,9 +65,9 @@ final class RouterConsole
      * @param array $argv
      * @return mixed
      */
-    private function callAction(array $route,array $argv): mixed
+    private static function callAction(array $route,array $argv): mixed
     {
-        $params = $this->parseArg($argv);
+        $params = self::parseArg($argv);
         $res=($params)?
             call_user_func_array([(new $route["controller"]),$route["action"]],$params)
             : call_user_func([(new $route["controller"]),$route["action"]
@@ -81,7 +81,7 @@ final class RouterConsole
      * @param array $argv
      * @return array
      */
-    private function parseArg(array $argv): array
+    private static function parseArg(array $argv): array
     {
         $my_args = [];
         for ($i = 1; $i < count($argv); $i++) {

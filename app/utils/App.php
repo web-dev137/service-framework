@@ -11,9 +11,7 @@ final class App
     {
         self::setDb($config);
         self::setPost();
-        foreach($config["routes"] as $route) {
-            Router::route($route["uri"],$route["controller"],$route["action"]);
-        }
+
         Router::loadRoutes();
     }
 
