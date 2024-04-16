@@ -1,9 +1,5 @@
 <?php
 
-use App\handlers\api\ConverterApi;
-use App\handlers\api\PostApi;
-use App\handlers\Site;
-
 return [
     "db" => [
         "host" => "localhost",
@@ -18,46 +14,5 @@ return [
         "user" => "root",
         "password" => "",
         "dbname" => "service_framework_test"
-    ],
-    "routes" => [
-        [
-            "uri"=>"GET /api/post",
-            "controller"=> PostApi::class,
-            "action"=>"index"
-        ],
-        [
-            "uri"=>"POST /api/post/create",
-            "controller"=> PostApi::class,
-            "action"=>"create"
-        ],
-        [
-            "uri"=>"GET /api/post/view",
-            "controller"=>PostApi::class,
-            "action"=>"view"
-        ],
-        [
-            "uri"=>"DELETE /api/post",
-            "controller"=>PostApi::class,
-            "action"=>"delete"
-        ],
-        [
-            "uri"=>"PATCH /api/post",
-            "controller"=>PostApi::class,
-            "action"=>"update"
-        ],
-        [
-            "uri"=>"GET /docs",
-            "controller"=>Site::class,
-            "action"=>"docs"
-        ],
-    ],
-    "console" => [
-        "routes" => [
-            [
-                "command"=>"hello/index",
-                "controller"=>\App\console\HelloController::class,
-                "action"=>"index"
-            ]
-        ]
     ]
 ];
