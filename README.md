@@ -4,23 +4,17 @@ This framework implements ideas and concepts from various
 php frameworks and is designed to implement specific microservices 
 of a project implemented on a microservice architecture.
 Routing:
-Set request method require now but in future I will fix it.
-- Route are configured in config file in route section:
+- Route are configured in routes/web.php file with you may use methods of "Router" class for example:
 ~~~
-   [
-    "uri" => GET api/index,
-    "controller" => HandlerApi::class,
-    "action" => "index"
-   ]
+   Router::get("/api/post", PostApi::class,"index");
 ~~~
-- Route for console commands in console/route section, 
+- Route for console commands are configured in routes/web.php file with you may use methods of "Router" class for example: 
 - param msg get in handler:
 ~~~
-[
-   "command"=>"hello/index",
-   "controller"=>\App\console\HelloController::class,
-   "action"=>"index"
-]
+RouterConsole::route("hello/index",\App\console\HelloController::class,"index");
+~~~
+Use this command in console you can like this
+~~~
 php command.php -c hello/index --msg="Hi"
 ~~~
 The database instance, routes and configurations are configured in the App class,
